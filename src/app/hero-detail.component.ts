@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -15,7 +15,7 @@ import { Hero } from './hero';
 export class HeroDetailComponent implements OnInit{
   constructor(private heroService: HeroService, private route: ActivatedRoute, private location: Location){}
 
-  @Input() hero: Hero;
+  hero: Hero;
 
   ngOnInit(): void {
     this.route.paramMap
@@ -25,6 +25,11 @@ export class HeroDetailComponent implements OnInit{
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.heroService.updateHero(this.hero)
+      .then(()=> this.goBack());
   }
 
 }
